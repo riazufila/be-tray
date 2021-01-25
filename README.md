@@ -1,6 +1,6 @@
-# 5ToTray
+# be-tray
 
-5ToTray is a python script that allows services to be put into the system tray.
+be-tray is a script that allows services' status to be viewed from the system tray.
 
 
 To-Do-List
