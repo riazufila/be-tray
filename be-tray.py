@@ -2,25 +2,25 @@
 
 #!/usr/bin/env python3
 
-from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction
+from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction
 from PyQt5.QtGui import QIcon
+from multiprocessing import Process
 
-app = QApplication([])
-app.setQuitOnLastWindowClosed(False)
 
-icon = QIcon("icons/shield.png")
-tray = QSystemTrayIcon()
-tray.setIcon(icon)
+def start_tray():
+    # Initialize QApplication
+    app = QApplication([])
+    app.setQuitOnLastWindowClosed(False)
 
-tray.setVisible(True)
+    # Set icon
+    icon = QIcon("icons/shield.png")
+    tray = QSystemTrayIcon()
+    tray.setIcon(icon)
+    tray.setVisible(True)
 
-#menu = QMenu()
-#entries = ["One", "Two", "Three"]
-#for entry in entries:
-#    action = QAction(entry)
-#    menu.addAction(action)
-#    action.triggered.connect(app.quit)
+    # Run tray
+    app.exec_()
 
-#tray.setContextMenu(menu)
 
-app.exec_()
+if __name__ == "__main__":
+    start_tray()
