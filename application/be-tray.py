@@ -14,7 +14,7 @@ def start_tray(s):
     app.setQuitOnLastWindowClosed(False)
 
     # Set icon
-    icon = QIcon("icons/shield.png")
+    icon = QIcon("../icons/shield.png")
     tray = QSystemTrayIcon()
     tray.setIcon(icon)
     tray.setVisible(True)
@@ -24,7 +24,7 @@ def start_tray(s):
 
 
 def check_services():
-    with open("config") as f:
+    with open("../config/be-tray.json") as f:
         services = json.load(f)
 
     return services
