@@ -1,6 +1,6 @@
 # be-tray
 
-be-tray is a simple program that allows services' status to be viewed from the system tray.
+be-tray is a simple program that allows Linux services' status to be viewed from the system tray.
 
 
 To-Do-List
