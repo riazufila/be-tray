@@ -1,5 +1,6 @@
 # be-tray
 
+##### Early Development
 be-tray is a simple program that allows Linux services' status to be viewed from the system tray.
 
 
