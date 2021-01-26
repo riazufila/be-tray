@@ -11,6 +11,7 @@ For a service to be shown on the tray, config/be-tray.json will need to be edite
 - [ ] Default icons for common services.
 - [ ] Turn services on and off.
 - [ ] View services' status realtime.
+- [ ] etc.
 
 ### Done    
 - [x] Parallel processes.
