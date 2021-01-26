@@ -24,7 +24,7 @@ def start_tray(s):
 
 
 def check_services():
-    with open("be-tray.json") as f:
+    with open("config") as f:
         services = json.load(f)
 
     return services
