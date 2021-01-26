@@ -5,6 +5,7 @@
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction, QMenu
 from PyQt5.QtGui import QIcon
 from multiprocessing import Process
+import subprocess
 import json
 
 
@@ -13,8 +14,18 @@ def start_tray(ns, on, off):
     app = QApplication([])
     app.setQuitOnLastWindowClosed(False)
 
+    # Check service status
+    sp = str(
+        subprocess.run(["systemctl", "is-active", "--quiet", ns, "/dev/null"],
+                       capture_output=True))
+
+    if sp.__contains__("returncode=0"):
+        ip = on
+    else:
+        ip = off
+
     # Set icon
-    icon = QIcon("../icons/shield.png")
+    icon = QIcon(ip)
     tray = QSystemTrayIcon()
     tray.setIcon(icon)
     tray.setVisible(True)
