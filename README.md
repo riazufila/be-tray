@@ -4,6 +4,6 @@ be-tray is a simple program that allows Linux services' status to be viewed from
 
 
 To-Do-List
-- [] Parallel processes.
+- [x] Parallel processes.
 - [] View active services.
 - [] Manipulate services.
