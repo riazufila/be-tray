@@ -1,1 +1,5 @@
+# pylintrc files
 .pylintrc
+
+# gitignore files
+.gitignore
