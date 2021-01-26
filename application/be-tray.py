@@ -8,7 +8,7 @@ from multiprocessing import Process
 import json
 
 
-def start_tray(s):
+def start_tray(ns, on, off):
     # Initialize QApplication
     app = QApplication([])
     app.setQuitOnLastWindowClosed(False)
@@ -24,16 +24,34 @@ def start_tray(s):
 
 
 def check_services():
+    name_services = []
+    icon_paths_on = []
+    icon_paths_off = []
+
     with open("../config/be-tray.json") as f:
         services = json.load(f)
 
-    return services
+    for s in services:
+        name_services.append(s)
+
+    for ns in name_services:
+        icon_paths_on.append(services[ns][0])
+
+    for ns in name_services:
+        icon_paths_off.append(services[ns][1])
+
+    return name_services, icon_paths_on, icon_paths_off
 
 
 if __name__ == "__main__":
-    services = check_services()
-    print(len(services))
-    print(services)
+    name_services, icon_paths_on, icon_paths_off = check_services()
 
-    #for s in services:
-    #   Process(target=start_tray, args=(s, )).start()
+    num_services = len(name_services)
+
+    for i in range(num_services):
+        Process(target=start_tray,
+                args=(
+                    name_services[i],
+                    icon_paths_on[i],
+                    icon_paths_off[i],
+                )).start()
