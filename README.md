@@ -1,7 +1,10 @@
 # be-tray (Early Development)
 
 
-be-tray is a simple program that allows Linux services' status to be viewed from the system tray.
+- be-tray is a simple program that allows Linux services' status to be viewed from the system tray.
+
+
+- *be-tray uses systemd* to check for active and inactive services. Hence, only systems that uses systemd to manage services are supported.
 
 
 # Quick Start
@@ -30,9 +33,6 @@ Or use your preferred package manager.
     ]
 }
 ```
-
-
-- be-tray uses systemd to check for active and inactive services. Hence, only systems that uses systemd to manage services are supported.
 
 
 # TODO
