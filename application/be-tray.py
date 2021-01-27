@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-#!/usr/bin/env python3
-
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction, QMenu
 from PyQt5.QtGui import QIcon
 from multiprocessing import Process
@@ -36,12 +34,15 @@ def start_tray(ns, ip):
 
 
 def check_services():
+    # Some variables assignments
     name_services = []
     icon_paths = []
 
+    # Parsing config from json to dictionary
     with open("../config/be-tray.json") as f:
         services = json.load(f)
 
+    # Appending values in declared tuples
     for ns, ip in services.items():
         name_services.append(ns)
         icon_paths.append(ip)
@@ -50,9 +51,15 @@ def check_services():
 
 
 if __name__ == "__main__":
+    # making path global
+    global srcdir
+
+    # Some variables assignments
+    srcdir = os.path.dirname(os.path.realpath(__file__))
     name_services, icon_paths = check_services()
     num_services = len(name_services)
 
+    # Start tray in new process
     for i in range(num_services):
         Process(target=start_tray, args=(
             name_services[i],
