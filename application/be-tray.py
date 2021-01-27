@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction, QMenu
+from PyQt5.QtWidgets import QApplication, QSystemTrayIcon
 from PyQt5.QtGui import QIcon
 from multiprocessing import Process
 import subprocess
