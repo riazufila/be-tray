@@ -2,11 +2,25 @@
 
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction, QMenu
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QObject, QThread, pyqtSignal, pyqtSlot
 from multiprocessing import Process
 import subprocess
 import json
 import os
 import time
+
+
+class worker(QObject):
+    newIcon = pyqtSignal(object)
+
+    @pyqtSlot()
+    def run(self):
+        while True:
+            self.newIcon.emit(
+                QIcon(
+                    "/home/riazufila/Repositories/be-tray/icons/shield-off.png"
+                ))
+            QThread.msleep(1000)
 
 
 class systemTray():
@@ -45,7 +59,6 @@ class systemTray():
         # Initialize QApplication
         self.app = QApplication([])
         self.app.setQuitOnLastWindowClosed(False)
-        self.action = QAction()
 
         # Check service status
         ipc, state = self.check_service(ns, ip)
@@ -66,8 +79,24 @@ class systemTray():
         # Add menu to tray
         self.tray.setContextMenu(self.menu)
 
+        # create thread
+        self.thread = QThread()
+        # create object which will be moved to another thread
+        self.worker = worker()
+        # move object to another thread
+        self.worker.moveToThread(self.thread)
+        # after that, we can connect signals from this object to slot in GUI thread
+        self.worker.newIcon.connect(self.updateIcon)
+        # connect started signal to run method of object in another thread
+        self.thread.started.connect(self.worker.run)
+        # start thread
+        self.thread.start()
+
         # Run tray
         self.app.exec_()
+
+    def updateIcon(self, icon):
+        self.tray.setIcon(icon)
 
 
 if __name__ == "__main__":
