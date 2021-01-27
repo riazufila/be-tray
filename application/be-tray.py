@@ -7,7 +7,6 @@ from multiprocessing import Process
 import subprocess
 import json
 import os
-import time
 
 
 class worker(QObject):
