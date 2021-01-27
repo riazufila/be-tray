@@ -41,7 +41,7 @@ Or use your preferred package manager.
 ### In Progress
 - [ ] Default icons for common services.
 - [ ] Turn services on and off.
-- [ ] Basic logic algorithms.
+- [ ] Basic app settings.
 - [ ] etc.
 
 ### Done    
