@@ -21,12 +21,12 @@ Or use your preferred package manager.
 ```json
 {
     "ufw": [
-        "/../icons/shield-on.png",
-        "/../icons/shield-off.png"
+        "../icons/shield-on.png",
+        "../icons/shield-off.png"
     ],
     "httpd": [
-        "/../icons/web-on.png",
-        "/../icons/web-off.png"
+        "../icons/web-on.png",
+        "../icons/web-off.png"
     ]
 }
 ```
