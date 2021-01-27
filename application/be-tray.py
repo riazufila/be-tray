@@ -18,23 +18,27 @@ def start_tray(ns, ip):
 
         if sp.__contains__("returncode=0"):
             ipc = ip[0]
+            state = "active"
         else:
             ipc = ip[1]
+            state = "inactive"
 
-        return ipc
+        return ipc, state
 
     # Initialize QApplication
     app = QApplication([])
     app.setQuitOnLastWindowClosed(False)
+    action = QAction()
 
     # Check service status
-    ipc = check_services(ip)
+    ipc, state = check_services(ip)
 
     # Set icon
     icon = QIcon(srcdir + ipc)
     tray = QSystemTrayIcon()
     tray.setIcon(icon)
     tray.setVisible(True)
+    tray.setToolTip(ns + " is " + state)
 
     # Run tray
     app.exec_()
