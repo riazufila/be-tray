@@ -13,13 +13,28 @@ import time
 class worker(QObject):
     newIcon = pyqtSignal(object)
 
+    def __init__(self, ns, ip):
+        super().__init__()
+        self.ns = ns
+        self.ip = ip
+
     @pyqtSlot()
     def run(self):
         while True:
-            self.newIcon.emit(
-                QIcon(
-                    "/home/riazufila/Repositories/be-tray/icons/shield-off.png"
-                ))
+            sp = str(
+                subprocess.run([
+                    "systemctl", "is-active", "--quiet", self.ns, "/dev/null"
+                ],
+                               capture_output=True))
+
+            if sp.__contains__("returncode=0"):
+                ipc = self.ip[0]
+                state = "active"
+            else:
+                ipc = self.ip[1]
+                state = "inactive"
+
+            self.newIcon.emit(QIcon(srcdir + ipc))
             QThread.msleep(1000)
 
 
@@ -79,17 +94,17 @@ class systemTray():
         # Add menu to tray
         self.tray.setContextMenu(self.menu)
 
-        # create thread
+        # Create thread
         self.thread = QThread()
-        # create object which will be moved to another thread
-        self.worker = worker()
-        # move object to another thread
+        # Create object which will be moved from main thread to worker thread
+        self.worker = worker(ns, ip)
+        # Move object to worker thread
         self.worker.moveToThread(self.thread)
-        # after that, we can connect signals from this object to slot in GUI thread
+        # Connect object to signal
         self.worker.newIcon.connect(self.updateIcon)
-        # connect started signal to run method of object in another thread
+        # Connect started signal to run method of object in worker thread
         self.thread.started.connect(self.worker.run)
-        # start thread
+        # Start thread
         self.thread.start()
 
         # Run tray
