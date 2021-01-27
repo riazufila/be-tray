@@ -7,9 +7,10 @@ from PyQt5.QtGui import QIcon
 from multiprocessing import Process
 import subprocess
 import json
+import os
 
 
-def start_tray(ns, on, off):
+def start_tray(ns, ip):
     # Initialize QApplication
     app = QApplication([])
     app.setQuitOnLastWindowClosed(False)
@@ -20,9 +21,9 @@ def start_tray(ns, on, off):
                        capture_output=True))
 
     if sp.__contains__("returncode=0"):
-        ip = on
+        ip = ip[0]
     else:
-        ip = off
+        ip = ip[1]
 
     # Set icon
     icon = QIcon(ip)
@@ -36,33 +37,24 @@ def start_tray(ns, on, off):
 
 def check_services():
     name_services = []
-    icon_paths_on = []
-    icon_paths_off = []
+    icon_paths = []
 
     with open("../config/be-tray.json") as f:
         services = json.load(f)
 
-    for s in services:
-        name_services.append(s)
+    for ns, ip in services.items():
+        name_services.append(ns)
+        icon_paths.append(ip)
 
-    for ns in name_services:
-        icon_paths_on.append(services[ns][0])
-
-    for ns in name_services:
-        icon_paths_off.append(services[ns][1])
-
-    return name_services, icon_paths_on, icon_paths_off
+    return name_services, icon_paths
 
 
 if __name__ == "__main__":
-    name_services, icon_paths_on, icon_paths_off = check_services()
-
+    name_services, icon_paths = check_services()
     num_services = len(name_services)
 
     for i in range(num_services):
-        Process(target=start_tray,
-                args=(
-                    name_services[i],
-                    icon_paths_on[i],
-                    icon_paths_off[i],
-                )).start()
+        Process(target=start_tray, args=(
+            name_services[i],
+            icon_paths[i],
+        )).start()
