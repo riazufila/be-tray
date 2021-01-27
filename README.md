@@ -13,6 +13,7 @@ be-tray uses systemd to check for active and inactive services. Hence, only syst
 ### In Progress
 - [ ] Default icons for common services.
 - [ ] Turn services on and off.
+- [ ] Basic logic algorithms.
 - [ ] etc.
 
 ### Done    
