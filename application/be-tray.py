@@ -120,7 +120,7 @@ if __name__ == "__main__":
     be_tray = systemTray()
 
     # Some variables assignments
-    srcdir = os.path.dirname(os.path.realpath(__file__))
+    srcdir = os.path.dirname(os.path.realpath(__file__)) + "/"
     name_services, icon_paths = be_tray.read_config()
     num_services = len(name_services)
 
