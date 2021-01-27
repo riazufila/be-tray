@@ -39,7 +39,7 @@ def check_services():
     icon_paths = []
 
     # Parsing config from json to dictionary
-    with open("../config/be-tray.json") as f:
+    with open(srcdir + "../config/be-tray.json") as f:
         services = json.load(f)
 
     # Appending values in declared tuples
