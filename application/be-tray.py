@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction
+from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction, QMenu
 from PyQt5.QtGui import QIcon
 from multiprocessing import Process
 import subprocess
@@ -10,28 +10,22 @@ import time
 
 
 def start_tray(ns, ip):
-    def check_services(ip):
-        sp = str(
-            subprocess.run(
-                ["systemctl", "is-active", "--quiet", ns, "/dev/null"],
-                capture_output=True))
-
-        if sp.__contains__("returncode=0"):
-            ipc = ip[0]
-            state = "active"
-        else:
-            ipc = ip[1]
-            state = "inactive"
-
-        return ipc, state
-
     # Initialize QApplication
     app = QApplication([])
     app.setQuitOnLastWindowClosed(False)
     action = QAction()
 
     # Check service status
-    ipc, state = check_services(ip)
+    sp = str(
+        subprocess.run(["systemctl", "is-active", "--quiet", ns, "/dev/null"],
+                       capture_output=True))
+
+    if sp.__contains__("returncode=0"):
+        ipc = ip[0]
+        state = "active"
+    else:
+        ipc = ip[1]
+        state = "inactive"
 
     # Set icon
     icon = QIcon(srcdir + ipc)
@@ -39,6 +33,17 @@ def start_tray(ns, ip):
     tray.setIcon(icon)
     tray.setVisible(True)
     tray.setToolTip(ns + " is " + state)
+
+    # Set menu
+    menu = QMenu()
+    toggle = QAction("Enable/Disable")
+    quit = QAction("Exit")
+    quit.triggered.connect(app.quit)
+    menu.addAction(toggle)
+    menu.addAction(quit)
+
+    # Add menu to tray
+    tray.setContextMenu(menu)
 
     # Run tray
     app.exec_()
