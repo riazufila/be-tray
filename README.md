@@ -19,7 +19,7 @@ pip install PyQt5
 Or use your preferred package manager.
 
 
-- Then, edit `config/be-tray.json` to include whatever service you wish to display.
+- Then, edit `config/be-tray.json` to include whatever service you wish to display. Icons should be placed in `icons/` and the format for icon paths in `config/be-tray.json` should be as follows.
 
 ```json
 {
