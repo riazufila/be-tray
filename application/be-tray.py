@@ -1,30 +1,37 @@
 #!/usr/bin/env python3
 
-from PyQt5.QtWidgets import QApplication, QSystemTrayIcon
+from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QAction
 from PyQt5.QtGui import QIcon
 from multiprocessing import Process
 import subprocess
 import json
 import os
+import time
 
 
 def start_tray(ns, ip):
+    def check_services(ip):
+        sp = str(
+            subprocess.run(
+                ["systemctl", "is-active", "--quiet", ns, "/dev/null"],
+                capture_output=True))
+
+        if sp.__contains__("returncode=0"):
+            ipc = ip[0]
+        else:
+            ipc = ip[1]
+
+        return ipc
+
     # Initialize QApplication
     app = QApplication([])
     app.setQuitOnLastWindowClosed(False)
 
     # Check service status
-    sp = str(
-        subprocess.run(["systemctl", "is-active", "--quiet", ns, "/dev/null"],
-                       capture_output=True))
-
-    if sp.__contains__("returncode=0"):
-        ip = ip[0]
-    else:
-        ip = ip[1]
+    ipc = check_services(ip)
 
     # Set icon
-    icon = QIcon(srcdir + ip)
+    icon = QIcon(srcdir + ipc)
     tray = QSystemTrayIcon()
     tray.setIcon(icon)
     tray.setVisible(True)
@@ -33,7 +40,7 @@ def start_tray(ns, ip):
     app.exec_()
 
 
-def check_services():
+def read_config():
     # Some variables assignments
     name_services = []
     icon_paths = []
@@ -56,7 +63,7 @@ if __name__ == "__main__":
 
     # Some variables assignments
     srcdir = os.path.dirname(os.path.realpath(__file__))
-    name_services, icon_paths = check_services()
+    name_services, icon_paths = read_config()
     num_services = len(name_services)
 
     # Start tray in new process
