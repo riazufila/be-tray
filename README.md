@@ -7,18 +7,18 @@ be-tray is a simple program that allows Linux services' status to be viewed from
 # Quick Start
 
 
-Install PyQt5:
+- Install PyQt5:
 
-```
+```sh
 pip install PyQt5
 ```
 
 Or use your preferred package manager.
 
 
-Then, edit `config/be-tray.json` to include whatever service you wish to display.
+- Then, edit `config/be-tray.json` to include whatever service you wish to display.
 
-```
+```json
 {
     "ufw": [
         "/../icons/shield-on.png",
@@ -31,7 +31,8 @@ Then, edit `config/be-tray.json` to include whatever service you wish to display
 }
 ```
 
-be-tray uses systemd to check for active and inactive services. Hence, only systems that uses systemd to manage services are supported.
+
+- be-tray uses systemd to check for active and inactive services. Hence, only systems that uses systemd to manage services are supported.
 
 
 # TODO
