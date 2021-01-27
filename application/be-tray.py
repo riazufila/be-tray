@@ -24,7 +24,7 @@ def start_tray(ns, ip):
         ip = ip[1]
 
     # Set icon
-    icon = QIcon(ip)
+    icon = QIcon(srcdir + ip)
     tray = QSystemTrayIcon()
     tray.setIcon(icon)
     tray.setVisible(True)
@@ -39,7 +39,7 @@ def check_services():
     icon_paths = []
 
     # Parsing config from json to dictionary
-    with open(srcdir + "../config/be-tray.json") as f:
+    with open(srcdir + "/../config/be-tray.json") as f:
         services = json.load(f)
 
     # Appending values in declared tuples
