@@ -17,7 +17,6 @@ class worker(QObject):
         self.ns = ns
         self.ip = ip
 
-    @pyqtSlot()
     def run(self):
         while True:
             sp = str(
@@ -37,7 +36,7 @@ class worker(QObject):
             QThread.msleep(1000)
 
 
-class systemTray():
+class systemTray(QObject):
     def check_service(self, ns, ip):
         sp = str(
             subprocess.run(
