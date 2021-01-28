@@ -44,6 +44,7 @@ def read_config():
 class worker(QObject):
     cs = check_service
     newIcon = pyqtSignal(object)
+    newToolTip = pyqtSignal(str)
 
     def __init__(self, ns, ip):
         super().__init__()
@@ -53,8 +54,8 @@ class worker(QObject):
     def run(self):
         while True:
             ipc, state = self.cs(self.ns, self.ip)
-
             self.newIcon.emit(QIcon(srcdir + ipc))
+            self.newToolTip.emit(self.ns + " is " + state)
             QThread.msleep(1000)
 
 
@@ -93,6 +94,7 @@ class systemTray(QObject):
         self.worker.moveToThread(self.thread)
         # Connect object to signal
         self.worker.newIcon.connect(self.updateIcon)
+        self.worker.newToolTip.connect(self.updateToolTip)
         # Connect started signal to run method of object in worker thread
         self.thread.started.connect(self.worker.run)
         # Start thread
@@ -103,6 +105,9 @@ class systemTray(QObject):
 
     def updateIcon(self, icon):
         self.tray.setIcon(icon)
+
+    def updateToolTip(self, tooltip):
+        self.tray.setToolTip(tooltip)
 
 
 if __name__ == "__main__":
