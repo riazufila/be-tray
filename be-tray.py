@@ -5,7 +5,6 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QObject, QThread, pyqtSignal, pyqtSlot
 from multiprocessing import Process
 import subprocess
-import json
 import os
 
 
@@ -30,13 +29,21 @@ def read_config():
     icon_paths = []
 
     # Parsing config from json to dictionary
-    with open(srcdir + "be-tray.conf") as f:
-        services = json.load(f)
+    with open(srcdir + "be-tray.conf", "r") as f:
+        services = f.read().splitlines()
 
-    # Appending values in declared tuples
-    for ns, ip in services.items():
-        name_services.append(ns)
-        icon_paths.append(ip)
+    for l in services:
+        if l.startswith("#") or len(l.strip()) == 0:
+            pass
+        else:
+            line = l.split("=")
+            name_services.append(line[0].strip())
+            ip = []
+            ip_buffer = line[1].strip().split(",")
+            for m in ip_buffer:
+                ip.append(m)
+
+            icon_paths.append(ip)
 
     return name_services, icon_paths
 
