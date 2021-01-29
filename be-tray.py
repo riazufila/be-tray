@@ -38,8 +38,8 @@ def read_config():
         else:
             line = l.split("=")
             name_services.append(line[0].strip())
+            ip_buffer = line[1].replace(" ", "").split(",")
             ip = []
-            ip_buffer = line[1].strip().split(",")
             for m in ip_buffer:
                 ip.append(m)
 
