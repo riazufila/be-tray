@@ -7,7 +7,7 @@ be-tray is a simple program that allows Linux services' status to be viewed from
 # How to Use?
 
 
-**Requires Linux machine with systemd.**
+**Important: Requires Linux machine with systemd.**
 
 
 1. Install PyQt5 with `pip` or user you preferred package manager.
