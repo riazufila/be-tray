@@ -30,7 +30,7 @@ def read_config():
     icon_paths = []
 
     # Parsing config from json to dictionary
-    with open(srcdir + "../config/be-tray.json") as f:
+    with open(srcdir + "be-tray.conf") as f:
         services = json.load(f)
 
     # Appending values in declared tuples
