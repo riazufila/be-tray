@@ -130,9 +130,11 @@ if __name__ == "__main__":
     num_services = len(name_services)
 
     # Start tray in new process
-    for i in range(num_services):
+    i = 0
+    while i < num_services:
         Process(target=be_tray.start_tray,
                 args=(
                     name_services[i],
                     icon_paths[i],
                 )).start()
+        i += 1
