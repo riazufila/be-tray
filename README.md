@@ -1,14 +1,10 @@
 # be-tray
 
-
 be-tray is a simple program that allows Linux services' status to be viewed from the system tray.
-
 
 # How to Use?
 
-
-***Important: Requires Linux machine with systemd!***
-
+**_Important: Requires Linux machine with systemd!_**
 
 1. Install PyQt5 with `pip` or user you preferred package manager.
 
@@ -18,6 +14,6 @@ pip install PyQt5
 
 2. Then, edit `be-tray.conf` to include whatever service you wish to display.
 
-3. Add any custom icons if you wish in `icons/` and edit `be-tray,conf` accordingly.
+3. Add icons in `icons/` and edit `be-tray.conf` accordingly.
 
 4. Execute be-tray.
