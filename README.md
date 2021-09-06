@@ -16,4 +16,4 @@ pip install PyQt5
 
 3. Add icons in `icons/` and edit `be-tray.conf` accordingly.
 
-4. Execute be-tray.
+4. Execute be-tray. Then, if the services stated in `be-tray.conf` is active, the icons should display.
